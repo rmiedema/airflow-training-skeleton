@@ -34,10 +34,6 @@ args = {
     'retries': 1,
 }
 
-
-# In[21]:
-
-
 dag = DAG(
     dag_id='miedema_exercise_V',
     default_args=args,
@@ -55,6 +51,8 @@ task_2 = DummyOperator(
     dag = dag,
 )
 
+task_1 >> task_2 >> branching
+
 branching = BranchPythonOperator(
         task_id="branching", 
         python_callable=_get_weekday, 
@@ -62,23 +60,13 @@ branching = BranchPythonOperator(
         dag=dag,
 )
 
-days = ["Mon","Wed","Fri"]
-for day in days:
-    if day = "Mon":
-        branching >> DummyOperator(task_id= "Email Bob", dag=dag)
-    if day = "Wed":
-        branching >> DummyOperator(task_id= "Email Bert", dag=dag)
-    if day = "Fri":
-        branching >> DummyOperator(task_id= "Email Jan", dag=dag)
+people = ["Bob","Bart","Bert"]
+for person in people:
+    branching >> DummyOperator(task_id = person, dag=dag)
 
 join = DummyOperator(
     task_id="final_task",
     trigger_rule = "none_failed",
     dag=dag,
 )
-
-task_1 >> task_2 >> branching >> join
-
-
-
 
