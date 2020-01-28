@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import airflow
+from datetime import datetime
 from datetime import timedelta
 from airflow.models import DAG
 from airflow.operators.bash_operator import BashOperator
