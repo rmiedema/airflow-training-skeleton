@@ -18,7 +18,7 @@ from airflow.operators.python_operator import BranchPythonOperator
 
 
 def _get_weekday(execution_date, **context):
-    return execution_date.strfstime("%a")
+    return execution_date.strftime("%a")
 
 
 # In[20]:
