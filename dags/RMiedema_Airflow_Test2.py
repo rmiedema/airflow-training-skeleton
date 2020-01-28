@@ -11,10 +11,6 @@ from airflow.models import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.dummy_operator import DummyOperator
 
-
-# In[32]:
-
-
 args = {
     'owner': 'R_Miedema',
     'depends_on_past': False,
@@ -25,20 +21,12 @@ args = {
     'retries': 1,
 }
 
-
-# In[18]:
-
-
 dag = DAG(
     dag_id='miedema_test',
     default_args=args,
     schedule_interval= '@daily',
     dagrun_timeout=timedelta(minutes=60),
 )
-
-
-# In[33]:
-
 
 t1 = DummyOperator(
     task_id='task1',
@@ -67,10 +55,4 @@ t5 = DummyOperator(
 
 t1 >> t2 >> t3 >> t5
 t2 >> t4 >> t5
-
-
-# In[ ]:
-
-
-
 
