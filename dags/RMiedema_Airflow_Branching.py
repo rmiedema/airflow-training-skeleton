@@ -59,12 +59,15 @@ branching = BranchPythonOperator(
 
 task_1 >> branching
     
+
+people = ["Bob","Bart","Bert"]
+for person in people:
+    branching >> DummyOperator(task_id = person, dag=dag)
+    
 join = DummyOperator(
     task_id="final_task",
     trigger_rule = "none_failed",
     dag=dag,
 )
 
-people = ["Bob","Bart","Bert"]
-for person in people:
-    branching >> DummyOperator(task_id = person, dag=dag) >> join
+DummyOperator(task_id = person, dag=dag) >> join
