@@ -45,10 +45,6 @@ dag = DAG(
     dagrun_timeout=timedelta(minutes=5),
 )
 
-
-# In[28]:
-
-
 task_1 = DummyOperator(
     task_id='run_this_first',
     dag = dag,
@@ -66,6 +62,15 @@ branching = BranchPythonOperator(
         dag=dag,
 )
 
+days = ["Mon","Wed","Fri"]
+for day in days:
+    if day = "Mon":
+        branching >> DummyOperator(task_id= "Email Bob", dag=dag)
+    if day = "Wed":
+        branching >> DummyOperator(task_id= "Email Bert", dag=dag)
+    if day = "Fri":
+        branching >> DummyOperator(task_id= "Email Jan", dag=dag)
+
 join = DummyOperator(
     task_id="final_task",
     trigger_rule = "none_failed",
@@ -73,9 +78,6 @@ join = DummyOperator(
 )
 
 task_1 >> task_2 >> branching >> join
-
-
-# In[ ]:
 
 
 
