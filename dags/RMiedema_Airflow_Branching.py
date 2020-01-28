@@ -57,7 +57,7 @@ branching = BranchPythonOperator(
         dag=dag,
 )
 
-people = ["Bob","Bart","Bert"]
+people = ["Bob","Bert","Bart"]
 for person in people:
     branching >> DummyOperator(task_id = person, dag=dag)
     
