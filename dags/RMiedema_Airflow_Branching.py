@@ -46,13 +46,6 @@ task_1 = DummyOperator(
     dag = dag,
 )
 
-task_2 = DummyOperator(
-    task_id='run_this_second',
-    dag = dag,
-)
-
-task_1 >> task_2 >> branching
-
 branching = BranchPythonOperator(
         task_id="branching", 
         python_callable=_get_weekday, 
@@ -60,7 +53,8 @@ branching = BranchPythonOperator(
         dag=dag,
 )
 
-people = ["Bob","Bart","Bert"]
+people = ["Bert","Bart","Bob"]
 for person in people:
-    branching >> DummyOperator(task_id = person, dag=dag)
-
+    branching >> DummyOperator(task_id=person, dag=dag)
+    
+task_1 >> branching
