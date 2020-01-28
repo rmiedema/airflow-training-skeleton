@@ -15,10 +15,14 @@ from airflow.operators.python_operator import BranchPythonOperator
 
 
 # In[19]:
-
-
 def _get_weekday(execution_date, **context):
-    return execution_date.strftime("%a")
+    if execution_date.strftime("%a") == "Mon":
+        results = "Bob"
+    elif execution_date.strftime("%a") == "Tue":
+        results = "Bert"
+    else:
+        results = "Bart"
+    return results
 
 
 # In[20]:
@@ -53,8 +57,14 @@ branching = BranchPythonOperator(
         dag=dag,
 )
 
-people = ["Bert","Bart","Bob"]
+people = ["Bob","Bart","Bert"]
 for person in people:
-    branching >> DummyOperator(task_id=person, dag=dag)
+    branching >> DummyOperator(task_id = person, dag=dag)
     
-task_1 >> branching
+join = DummyOperator(
+    task_id="final_task",
+    trigger_rule = "none_failed",
+    dag=dag,
+)
+
+task_1 >> branching >> join
