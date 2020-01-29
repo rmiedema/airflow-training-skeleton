@@ -8,7 +8,7 @@ from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
 
 args = {
-    "owner": "godatadriven",
+    "owner": "RMiedema",
     "start_date": airflow.utils.dates.days_ago(10)
 }
 
